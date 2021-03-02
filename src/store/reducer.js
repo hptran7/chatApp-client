@@ -1,6 +1,7 @@
 const initialState = {
   isAuthenticated: false,
   userName: "",
+  chatRoomList: [],
 };
 
 const reducer = (state = initialState, action) => {

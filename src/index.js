@@ -15,6 +15,7 @@ import storage from "redux-persist/lib/storage";
 import { PersistGate } from "redux-persist/integration/react";
 import ChatRoom from "./components/ChatRoom";
 import requireAuth from "./components/requireAuth";
+import MainPage from "./components/MainPage";
 
 //*** Global Store ***//
 
@@ -46,9 +47,10 @@ ReactDOM.render(
               <Route exact path="/login" component={Login}></Route>
               <Route
                 exact
-                path="/chat"
+                path="/chat/:roomId"
                 component={requireAuth(ChatRoom)}
               ></Route>
+              <Route path="/main" component={requireAuth(MainPage)}></Route>
             </Switch>
           </BaseLayout>
         </HashRouter>
