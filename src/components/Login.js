@@ -3,8 +3,10 @@ import axios from "axios";
 import server from "../utils/serverLink";
 import { setAuthenticationHeader } from "../utils/authenticate";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 function Login(props) {
+  const history = useHistory();
   const [user, setUser] = useState();
   const handleOnChange = (e) => {
     e.preventDefault();
@@ -20,25 +22,38 @@ function Login(props) {
         localStorage.setItem("jsonwebtoken", token);
         setAuthenticationHeader(token);
         props.onLogin(result.data.userName);
+        history.push("/main");
       }
     });
   };
+
   return (
-    <>
-      <input
-        placeholder="username"
-        name="userName"
-        type="text"
-        onChange={handleOnChange}
-      ></input>
-      <input
-        placeholder="password"
-        name="password"
-        type="password"
-        onChange={handleOnChange}
-      ></input>
-      <button onClick={handleOnLogin}>Login</button>
-    </>
+    <div className="wrapper">
+      <div className="form">
+        <h1 className="title">Chat Application</h1>
+        <input
+          placeholder="username"
+          name="userName"
+          type="text"
+          onChange={handleOnChange}
+          required
+          className="input"
+        />
+        <input
+          type="password"
+          onChange={handleOnChange}
+          className="input"
+          placeholder="Password"
+          name="password"
+          required
+        />
+        <div align="center">
+          <button type="submit" className="button" onClick={handleOnLogin}>
+            <span>Start chatting</span>
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
 
