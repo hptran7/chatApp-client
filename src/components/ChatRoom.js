@@ -6,20 +6,25 @@ import io from "socket.io-client";
 import { connect } from "react-redux";
 import RoomList from "./RoomList";
 import RoomMembers from "./RoomMembers";
+import { Icon } from "@iconify/react";
+import sendOutlined from "@iconify/icons-ant-design/send-outlined";
 
 let socket;
 
 function ChatRoom(props) {
   const roomId = parseInt(useParams().roomId);
+  const roomName = useParams().roomName;
   const [typingMessage, setTypingMessage] = useState(false);
   const [messages, setMessages] = useState([]);
   const [oldMessage, setOldMessage] = useState([]);
+  const [showTypingMessage, setShowTypingMEssage] = useState("");
   const [chatRoomMembers, setChatRoomMembers] = useState([]);
   const handleOnChange = (e) => {
     e.preventDefault();
     setTypingMessage({
       [e.target.name]: e.target.value,
     });
+    setShowTypingMEssage(e.target.value);
   };
 
   const handleOnClick = () => {
@@ -37,6 +42,7 @@ function ChatRoom(props) {
         },
         () => setTypingMessage(false)
       );
+      setShowTypingMEssage("");
     }
   };
 
@@ -52,6 +58,7 @@ function ChatRoom(props) {
     socket.emit("joinRoom", roomId);
 
     return () => {
+      socket.emit("leaveRoom", roomId);
       socket.disconnect();
     };
   }, [roomId]);
@@ -67,28 +74,99 @@ function ChatRoom(props) {
     axios.get(`${serverLink}/chat-room/view-users/${roomId}`).then((result) => {
       setChatRoomMembers(result.data.members);
     });
-  }, []);
+    setMessages([]);
+  }, [roomId]);
 
-  /* useEffect for receiving new messages */
+  const oldMessagesLi = oldMessage.map((message, index) => {
+    return (
+      <li key={index} className="message-block">
+        {message.userName == props.userName ? (
+          <div className="message-wrapper my-message ">
+            <div className="sender">
+              <p className="sender-name">{message.userName}</p>
+            </div>
+            <div className="message">{message.message}</div>
+          </div>
+        ) : (
+          <div className="message-wrapper users-message ">
+            <div className="sender">
+              <p className="sender-name">{message.userName}</p>
+            </div>
+            <div className="message">{message.message}</div>
+          </div>
+        )}
+      </li>
+    );
+  });
+
+  /** display new messages from socket.io **/
+
   useEffect(() => {
     socket.on("message", (message) => {
       setMessages((messages) => [...messages, message]);
     });
   }, []);
 
+  const newMessagesLi = messages.map((message, index) => {
+    return (
+      <li key={index} className="message-block">
+        {message.user == props.userName ? (
+          <div className="message-wrapper my-message ">
+            <div className="sender">
+              <p className="sender-name">{message.user}</p>
+            </div>
+            <div className="message">{message.text}</div>
+          </div>
+        ) : (
+          <div className="message-wrapper users-message ">
+            <div className="sender">
+              <p className="sender-name">{message.user}</p>
+            </div>
+            <div className="message">{message.text}</div>
+          </div>
+        )}
+      </li>
+    );
+  });
+
   return (
     <div className="main-room">
       <RoomList />
-      <form>
-        <input
-          type="text"
-          name="message"
-          onChange={handleOnChange}
-          onKeyPress={handleOnEnter}
-        ></input>
-        <input type="reset" onClick={handleOnClick} value="send"></input>
-      </form>
-      <RoomMembers chatRoomMembers={chatRoomMembers} roomId={roomId} />
+      <div className="chat-message-wrapper">
+        <div className="chat-feed">
+          <div className="chat-title-container">
+            <div className="chat-title">{roomName}</div>
+            <ul>{oldMessagesLi}</ul>
+            <ul>{newMessagesLi}</ul>
+            <div className="message-form-container">
+              <div className="message-form">
+                <input
+                  className="message-input"
+                  type="text"
+                  name="message"
+                  onChange={handleOnChange}
+                  onKeyPress={handleOnEnter}
+                  placeholder="send a message..."
+                  value={showTypingMessage}
+                ></input>
+                <button
+                  type="submit"
+                  onClick={handleOnClick}
+                  className="send-button"
+                >
+                  <Icon icon={sendOutlined} width="1.3em" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <RoomMembers
+        chatRoomMembers={chatRoomMembers}
+        roomId={roomId}
+        roomName={roomName}
+      />
     </div>
   );
 }

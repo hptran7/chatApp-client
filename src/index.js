@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { HashRouter, Switch, Route } from "react-router-dom";
+import { HashRouter, Switch, Route, BrowserRouter } from "react-router-dom";
 import BaseLayout from "./components/BaseLayout";
 import Login from "./components/Login";
 import { createStore } from "redux";
@@ -40,20 +40,20 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <HashRouter>
+        <BrowserRouter forceRefresh={true}>
           <BaseLayout>
             <Switch>
               <Route exact path="/" component={App}></Route>
               <Route exact path="/login" component={Login}></Route>
               <Route
                 exact
-                path="/chat/:roomId"
+                path="/chat/:roomName/:roomId"
                 component={requireAuth(ChatRoom)}
               ></Route>
               <Route path="/main" component={requireAuth(MainPage)}></Route>
             </Switch>
           </BaseLayout>
-        </HashRouter>
+        </BrowserRouter>
       </PersistGate>
     </Provider>
   </React.StrictMode>,
