@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import server from "../utils/serverLink";
 import { useHistory } from "react-router-dom";
+import { Image } from "cloudinary-react";
 
 function RoomMembers(props) {
   const history = useHistory();
@@ -43,7 +44,16 @@ function RoomMembers(props) {
   const member = props.chatRoomMembers.map((member, index) => {
     return (
       <li key={index} className="ce-person-container">
-        <div className="ce-person-text">{member}</div>
+        <div className="ce-person-avatar">
+          <div style={{ height: "48px", width: "48px" }}>
+            <Image
+              cloudName="dmv9eluxo"
+              publicId={member.avatar}
+              className="ce-avatar"
+            ></Image>
+          </div>
+        </div>
+        <div className="ce-person-text">{member.username}</div>
       </li>
     );
   });

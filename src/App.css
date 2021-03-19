@@ -186,8 +186,14 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: 48px;
+  margin-right: 8px;
 }
-
+.my-message-avatar{
+  float: right;
+}
+.users-message-avatar{
+  float: left;
+}
 .message {
   padding: 2px;
   font-size: 1.1em;
@@ -410,6 +416,9 @@
   display: flex;
   flex-direction: column;
   border-radius: 8px;
+  /* justify-content: end;
+  align-items: end; */
+  min-width: 100px;
 }
 .sender {
   display: flex;
@@ -428,6 +437,7 @@
   color: white;
   background-color: rgb(59, 42, 80);
   letter-spacing: 0.5px;
+  align-items: flex-end;
 }
 .users-message {
   float: left;
@@ -467,8 +477,8 @@
 }
 .ce-person-text {
   text-decoration: none;
-  padding-bottom: 10px;
-  padding-left: 12px;
+  padding-bottom: 24px;
+  padding-left: 48px;
   letter-spacing: 1.2px;
   font-size: 1.2em;
 }
@@ -503,4 +513,20 @@
 }
 .option:hover {
   cursor: pointer;
+}
+.ce-person-avatar{
+  padding: 2px;
+  height: 0px;
+}
+
+.ce-avatar{
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+  color: white;
+  text-align: center;
+  background-color: white;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 48px;
 }

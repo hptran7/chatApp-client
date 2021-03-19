@@ -2,6 +2,7 @@ const initialState = {
   isAuthenticated: false,
   userName: "",
   chatRoomList: [],
+  userAvatar: "",
 };
 
 const reducer = (state = initialState, action) => {
@@ -10,6 +11,7 @@ const reducer = (state = initialState, action) => {
       ...state,
       isAuthenticated: true,
       userName: action.userName,
+      userAvatar: action.userAvatar,
     };
   }
   return state;

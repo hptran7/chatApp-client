@@ -20,10 +20,11 @@ function Login(props) {
   const handleOnLogin = async () => {
     axios.post(`${server}/user/login`, user).then(async (result) => {
       if (result.data.login) {
+        console.log(result.data.userAvatar);
         const token = result.data.token;
         localStorage.setItem("jsonwebtoken", token);
         setAuthenticationHeader(token);
-        props.onLogin(result.data.userName);
+        props.onLogin(result.data.userName, result.data.userAvatar);
         history.push("/main");
       }
     });
@@ -142,7 +143,8 @@ const mapStatetoProps = (state) => {
 };
 const dispatchStateToProps = (dispatch) => {
   return {
-    onLogin: (userName) => dispatch({ type: "ON_AUTH", userName: userName }),
+    onLogin: (userName, userAvatar) =>
+      dispatch({ type: "ON_AUTH", userName: userName, userAvatar: userAvatar }),
   };
 };
 

@@ -8,6 +8,7 @@ import RoomList from "./RoomList";
 import RoomMembers from "./RoomMembers";
 import { Icon } from "@iconify/react";
 import sendOutlined from "@iconify/icons-ant-design/send-outlined";
+import { Image } from "cloudinary-react";
 
 let socket;
 
@@ -78,21 +79,38 @@ function ChatRoom(props) {
   }, [roomId]);
 
   const oldMessagesLi = oldMessage.map((message, index) => {
+    const sender = chatRoomMembers.filter((member) => {
+      return member.username == message.userName;
+    });
     return (
       <li key={index} className="message-block">
         {message.userName == props.userName ? (
-          <div className="message-wrapper my-message ">
-            <div className="sender">
-              <p className="sender-name">{message.userName}</p>
+          <div>
+            <Image
+              className="message-avatar my-message-avatar"
+              cloudName="dmv9eluxo"
+              publicId={sender[0].avatar}
+            ></Image>
+            <div className="message-wrapper my-message ">
+              <div className="sender">
+                <p className="sender-name">{message.userName}</p>
+              </div>
+              <div className="message">{message.message}</div>
             </div>
-            <div className="message">{message.message}</div>
           </div>
         ) : (
-          <div className="message-wrapper users-message ">
-            <div className="sender">
-              <p className="sender-name">{message.userName}</p>
+          <div>
+            <Image
+              className="message-avatar users-message-avatar"
+              cloudName="dmv9eluxo"
+              publicId={sender[0].avatar}
+            ></Image>
+            <div className="message-wrapper users-message ">
+              <div className="sender">
+                <p className="sender-name">{message.userName}</p>
+              </div>
+              <div className="message">{message.message}</div>
             </div>
-            <div className="message">{message.message}</div>
           </div>
         )}
       </li>
@@ -108,21 +126,38 @@ function ChatRoom(props) {
   }, []);
 
   const newMessagesLi = messages.map((message, index) => {
+    const sender = chatRoomMembers.filter((member) => {
+      return member.username == message.user;
+    });
     return (
       <li key={index} className="message-block">
         {message.user == props.userName ? (
-          <div className="message-wrapper my-message ">
-            <div className="sender">
-              <p className="sender-name">{message.user}</p>
+          <div className="">
+            <Image
+              className="message-avatar my-message-avatar"
+              cloudName="dmv9eluxo"
+              publicId={sender[0].avatar}
+            ></Image>
+            <div className="message-wrapper my-message ">
+              <div className="sender">
+                <p className="sender-name">{message.user}</p>
+              </div>
+              <div className="message">{message.text}</div>
             </div>
-            <div className="message">{message.text}</div>
           </div>
         ) : (
-          <div className="message-wrapper users-message ">
-            <div className="sender">
-              <p className="sender-name">{message.user}</p>
+          <div>
+            <Image
+              className="message-avatar users-message-avatar"
+              cloudName="dmv9eluxo"
+              publicId={sender[0].avatar}
+            ></Image>
+            <div className="message-wrapper users-message ">
+              <div className="sender">
+                <p className="sender-name">{message.user}</p>
+              </div>
+              <div className="message">{message.text}</div>
             </div>
-            <div className="message">{message.text}</div>
           </div>
         )}
       </li>
@@ -174,6 +209,7 @@ function ChatRoom(props) {
 const mapStateToProps = (state) => {
   return {
     userName: state.userName,
+    userAvatar: state.userAvatar,
   };
 };
 

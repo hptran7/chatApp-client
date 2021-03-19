@@ -22,7 +22,7 @@ import MainPage from "./components/MainPage";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["userName", "isAuthenticated"],
+  whitelist: ["userName", "isAuthenticated", "userAvatar"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
