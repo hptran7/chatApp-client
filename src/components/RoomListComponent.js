@@ -33,7 +33,7 @@ function RoomListComponent() {
             <p className="ce-chat-title-text">{chatRoom.roomName}</p>
           </NavLink>
         </li>
-        <CreateRoomComp fetchAllroom={fetchAllroom}></CreateRoomComp>
+        {/* <CreateRoomComp fetchAllroom={fetchAllroom}></CreateRoomComp> */}
       </div>
     );
   });
@@ -44,6 +44,7 @@ function RoomListComponent() {
         Rooms
       </div>
       <ul>{listOfRoom}</ul>
+      <CreateRoomComp fetchAllroom={fetchAllroom}></CreateRoomComp>
     </>
   );
 }

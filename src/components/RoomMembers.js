@@ -27,8 +27,13 @@ function RoomMembers(props) {
   }, [props.roomID]);
 
   const handleOnLeaveRoom = () => {
-    history.push("/main");
-    axios.post(`${server}/chat-room/leave-room/${props.roomID}`);
+    axios
+      .post(`${server}/chat-room/leave-room/${props.roomID}`)
+      .then((result) => {
+        if (result.data.leaveRoom) {
+          history.push("/main");
+        }
+      });
   };
 
   const handleOnChange = (e) => {

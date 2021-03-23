@@ -3,7 +3,13 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { HashRouter, Switch, Route, BrowserRouter } from "react-router-dom";
+import {
+  HashRouter,
+  Switch,
+  Route,
+  BrowserRouter,
+  Router,
+} from "react-router-dom";
 import BaseLayout from "./components/BaseLayout";
 import Login from "./components/Login";
 import { createStore } from "redux";
@@ -43,7 +49,8 @@ ReactDOM.render(
         <BrowserRouter forceRefresh={true}>
           <BaseLayout>
             <Switch>
-              <Route exact path="/" component={Login}></Route>
+              <Route exact path="/" component={App}></Route>
+              <Route exact path="/login" component={Login}></Route>
               <Route
                 exact
                 path="/chat/:roomName/:roomId"

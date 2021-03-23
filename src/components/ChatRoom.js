@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import serverLink from "../utils/serverLink";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import io from "socket.io-client";
 import { connect } from "react-redux";
 import RoomList from "./RoomList";
@@ -19,6 +19,7 @@ function ChatRoom(props) {
   const [messages, setMessages] = useState([]);
   const [oldMessage, setOldMessage] = useState([]);
   const [showTypingMessage, setShowTypingMEssage] = useState("");
+  const history = useHistory();
   // const [chatRoomMembers, setChatRoomMembers] = useState([]);
   const myRef = useRef(null);
   const handleOnChange = (e) => {
@@ -78,12 +79,7 @@ function ChatRoom(props) {
       .then((result) => {
         setOldMessage(result.data.message);
       });
-    // await axios
-    //   .get(`${serverLink}/chat-room/view-users/${roomId}`)
-    //   .then((result) => {
-    //     setChatRoomMembers(result.data.members);
-    //   });
-    console.log(props.roomMembers);
+
     props.OnLoadRoom(roomId);
     setMessages([]);
     setTimeout(executeScroll, 500);
@@ -134,6 +130,12 @@ function ChatRoom(props) {
     socket.on("message", (message) => {
       setMessages((messages) => [...messages, message]);
       executeScroll();
+    });
+  }, []);
+  /** handle On new Member Log In **/
+  useEffect(() => {
+    socket.on("announce", (message) => {
+      console.log("good");
     });
   }, []);
 
