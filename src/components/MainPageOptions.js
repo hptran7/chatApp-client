@@ -4,13 +4,19 @@ import { Icon } from "@iconify/react";
 import bxsRightArrow from "@iconify/icons-bx/bxs-right-arrow";
 import bxsDownArrow from "@iconify/icons-bx/bxs-down-arrow";
 import UploadAvater from "./UploadAvater";
+import Options from "./Options";
 
 function MainPageOptions() {
   const history = useHistory();
+  const [showUploadOption, setShowUploadOption] = useState(false);
   const handleOnLogOut = () => {
     localStorage.removeItem("jsonwebtoken");
     localStorage.removeItem("persist:root");
     history.push("/login");
+  };
+
+  const handleOnShowUploadAvatar = () => {
+    setShowUploadOption(!showUploadOption);
   };
 
   const handleOnOptionsClick = () => {
@@ -22,34 +28,7 @@ function MainPageOptions() {
     <div className="room-members-wrapper">
       <div className="room-members">
         <div className="ce-settings-container">
-          <div className="members-list">
-            <div className="ce-section-title-container ce-person-title-container">
-              <div
-                className="ce-input ce-autocomplete-input options"
-                onClick={handleOnOptionsClick}
-              >
-                <div>Options</div>
-
-                {!showOptions ? (
-                  <Icon icon={bxsRightArrow} />
-                ) : (
-                  <Icon icon={bxsDownArrow} />
-                )}
-              </div>
-              <div style={{ height: "12px" }}></div>
-              {showOptions ? (
-                <div>
-                  <div className="option" onClick={handleOnLogOut}>
-                    Upload avatar
-                  </div>
-                  <div className="option" onClick={handleOnLogOut}>
-                    Log out
-                  </div>
-                </div>
-              ) : null}
-              <UploadAvater />
-            </div>
-          </div>
+          <Options />
         </div>
       </div>
     </div>

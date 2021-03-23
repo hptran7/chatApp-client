@@ -9,7 +9,9 @@ function MainPage() {
     <div className="main-room">
       <RoomList></RoomList>
       <div className="chat-message-wrapper">
-        <h1>Mainpage</h1>
+        <div className="mainpage-title">
+          <h1>Mainpage</h1>
+        </div>
       </div>
       <MainPageOptions />
     </div>

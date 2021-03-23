@@ -43,8 +43,7 @@ ReactDOM.render(
         <BrowserRouter forceRefresh={true}>
           <BaseLayout>
             <Switch>
-              <Route exact path="/" component={App}></Route>
-              <Route exact path="/login" component={Login}></Route>
+              <Route exact path="/" component={Login}></Route>
               <Route
                 exact
                 path="/chat/:roomName/:roomId"

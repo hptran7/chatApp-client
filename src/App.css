@@ -34,7 +34,7 @@
   padding-bottom: 20px !important;
   position: absolute;
   bottom: 0px;
-  width: 100%;
+  width: 83%;
   padding: 12px;
 }
 
@@ -90,13 +90,17 @@
 .ce-chat-card {
   padding: 16px 16px 12px;
   cursor: pointer;
+  list-style-type: none;
 }
 .ce-chat-title-text {
   font-weight: 500;
-  padding-bottom: 4px;
   white-space: nowrap;
   overflow: hidden;
   text-decoration: none !important;
+
+  padding-bottom: 8px;
+  letter-spacing: 1.2px;
+  font-size: 1.2em;
 }
 .chat-room-title {
   text-decoration: none;
@@ -188,10 +192,10 @@
   background-size: 48px;
   margin-right: 8px;
 }
-.my-message-avatar{
+.my-message-avatar {
   float: right;
 }
-.users-message-avatar{
+.users-message-avatar {
   float: left;
 }
 .message {
@@ -445,6 +449,7 @@
   background-color: rgb(202, 188, 220);
   color: #333;
   letter-spacing: 0.5px;
+  align-items: flex-start;
 }
 .room-members-wrapper {
   box-sizing: border-box;
@@ -506,20 +511,23 @@
 .options {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  background: #efefef;
 }
 .option {
   padding-bottom: 10px;
-  color: lightgrey;
+  color: blueviolet;
+  cursor: pointer;
 }
 .option:hover {
   cursor: pointer;
 }
-.ce-person-avatar{
+.ce-person-avatar {
   padding: 2px;
   height: 0px;
 }
 
-.ce-avatar{
+.ce-avatar {
   width: 44px;
   height: 44px;
   border-radius: 22px;
@@ -529,4 +537,62 @@
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 48px;
+}
+.mainpage-title {
+  display: flex;
+  justify-content: center;
+}
+
+.navbar {
+  height: 30px;
+  display: none;
+  background-color: #060b26;
+}
+.menu-icon {
+  color: white;
+}
+.side-bar {
+  background-color: #060b26;
+  height: 100vh;
+  width: 350px;
+  display: flex;
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  flex-direction: column;
+}
+.navbar-items {
+  display: flex;
+  color: #efefef;
+}
+
+@media screen and (max-width: 750px) {
+  .navbar {
+    display: block;
+  }
+  .room-list {
+    display: none;
+  }
+  .room-members-wrapper {
+    display: none;
+  }
+  .chat-message-wrapper {
+    max-width: 100%;
+    flex: 100%;
+  }
+  .room-title {
+    display: none;
+  }
+  .ce-person-title,
+  .ce-person-text {
+    color: white;
+  }
+}
+@media screen and (min-width: 751px) {
+  .side-bar {
+    display: none;
+  }
+  .nav-item-title {
+    display: none;
+  }
 }

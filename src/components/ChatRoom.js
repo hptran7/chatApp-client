@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import serverLink from "../utils/serverLink";
 import { useParams } from "react-router-dom";
 import io from "socket.io-client";
@@ -19,7 +19,8 @@ function ChatRoom(props) {
   const [messages, setMessages] = useState([]);
   const [oldMessage, setOldMessage] = useState([]);
   const [showTypingMessage, setShowTypingMEssage] = useState("");
-  const [chatRoomMembers, setChatRoomMembers] = useState([]);
+  // const [chatRoomMembers, setChatRoomMembers] = useState([]);
+  const myRef = useRef(null);
   const handleOnChange = (e) => {
     e.preventDefault();
     setTypingMessage({
@@ -53,6 +54,11 @@ function ChatRoom(props) {
     }
   };
 
+  /** AutoScroll Function **/
+  const executeScroll = () => {
+    myRef.current.scrollIntoView();
+  };
+
   /* establish socket connection when user enters room */
   useEffect(() => {
     socket = io(`${serverLink}`);
@@ -66,20 +72,25 @@ function ChatRoom(props) {
 
   /*** display old messages and all member in chatRoom from database when loaded ***/
 
-  useEffect(() => {
-    axios
+  useEffect(async () => {
+    await axios
       .get(`${serverLink}/chat-room/view-messages/${roomId}`)
       .then((result) => {
         setOldMessage(result.data.message);
       });
-    axios.get(`${serverLink}/chat-room/view-users/${roomId}`).then((result) => {
-      setChatRoomMembers(result.data.members);
-    });
+    // await axios
+    //   .get(`${serverLink}/chat-room/view-users/${roomId}`)
+    //   .then((result) => {
+    //     setChatRoomMembers(result.data.members);
+    //   });
+    console.log(props.roomMembers);
+    props.OnLoadRoom(roomId);
     setMessages([]);
+    setTimeout(executeScroll, 500);
   }, [roomId]);
 
   const oldMessagesLi = oldMessage.map((message, index) => {
-    const sender = chatRoomMembers.filter((member) => {
+    const sender = props.roomMembers.filter((member) => {
       return member.username == message.userName;
     });
     return (
@@ -89,7 +100,7 @@ function ChatRoom(props) {
             <Image
               className="message-avatar my-message-avatar"
               cloudName="dmv9eluxo"
-              publicId={sender[0].avatar}
+              publicId={sender[0] ? sender[0].avatar : null}
             ></Image>
             <div className="message-wrapper my-message ">
               <div className="sender">
@@ -103,7 +114,7 @@ function ChatRoom(props) {
             <Image
               className="message-avatar users-message-avatar"
               cloudName="dmv9eluxo"
-              publicId={sender[0].avatar}
+              publicId={sender[0] ? sender[0].avatar : null}
             ></Image>
             <div className="message-wrapper users-message ">
               <div className="sender">
@@ -122,11 +133,12 @@ function ChatRoom(props) {
   useEffect(() => {
     socket.on("message", (message) => {
       setMessages((messages) => [...messages, message]);
+      executeScroll();
     });
   }, []);
 
   const newMessagesLi = messages.map((message, index) => {
-    const sender = chatRoomMembers.filter((member) => {
+    const sender = props.roomMembers.filter((member) => {
       return member.username == message.user;
     });
     return (
@@ -171,8 +183,11 @@ function ChatRoom(props) {
         <div className="chat-feed">
           <div className="chat-title-container">
             <div className="chat-title">{roomName}</div>
-            <ul>{oldMessagesLi}</ul>
+            {oldMessage ? <ul>{oldMessagesLi}</ul> : null}
+
             <ul>{newMessagesLi}</ul>
+
+            <div ref={myRef} style={{ height: "75px" }}></div>
             <div className="message-form-container">
               <div className="message-form">
                 <input
@@ -196,12 +211,11 @@ function ChatRoom(props) {
           </div>
         </div>
       </div>
-
-      <RoomMembers
-        chatRoomMembers={chatRoomMembers}
-        roomId={roomId}
-        roomName={roomName}
-      />
+      <div className="room-members-wrapper">
+        <div className="room-members">
+          <RoomMembers />
+        </div>
+      </div>
     </div>
   );
 }
@@ -210,7 +224,15 @@ const mapStateToProps = (state) => {
   return {
     userName: state.userName,
     userAvatar: state.userAvatar,
+    roomMembers: state.roomMembers,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onLoadMembers: (memberList) =>
+      dispatch({ type: "LOAD_MEMBERS", memberList: memberList }),
+    OnLoadRoom: (roomId) => dispatch({ type: "ON_LOAD_ROOM", roomId: roomId }),
   };
 };
 
-export default connect(mapStateToProps)(ChatRoom);
+export default connect(mapStateToProps, mapDispatchToProps)(ChatRoom);
