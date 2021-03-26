@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
 import server from "../utils/serverLink";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 
 import axios from "axios";
 import CreateRoomComp from "./CreateRoomComp";
 
 function RoomListComponent() {
   const [roomList, setRoomList] = useState([]);
+  const history = useHistory();
+
+  const handleOnChangeRoom = () => {
+    setTimeout(() => {
+      history.go(0);
+    }, 300);
+  };
 
   /*** function to fetch all rooms that user is in  ***/
   const fetchAllroom = () => {
@@ -29,7 +36,11 @@ function RoomListComponent() {
     return (
       <div key={index}>
         <li key={chatRoom.roomId} className="ce-chat-card">
-          <NavLink to={roomLink} className="chat-room-title">
+          <NavLink
+            to={roomLink}
+            className="chat-room-title"
+            onClick={handleOnChangeRoom}
+          >
             <p className="ce-chat-title-text">{chatRoom.roomName}</p>
           </NavLink>
         </li>

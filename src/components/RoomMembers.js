@@ -14,6 +14,9 @@ function RoomMembers(props) {
   const [chatMembers, setChatMembers] = useState([]);
   const [addUserName, setAddUserName] = useState("");
   const fetchAllRoomMember = async () => {
+    if (!props.roomID) {
+      return;
+    }
     await axios
       .get(`${serverLink}/chat-room/view-users/${props.roomID}`)
       .then((result) => {

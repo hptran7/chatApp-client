@@ -130,6 +130,7 @@ function ChatRoom(props) {
     socket.on("message", (message) => {
       setMessages((messages) => [...messages, message]);
       executeScroll();
+      console.log(message);
     });
   }, []);
   /** handle On new Member Log In **/

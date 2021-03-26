@@ -22,6 +22,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import ChatRoom from "./components/ChatRoom";
 import requireAuth from "./components/requireAuth";
 import MainPage from "./components/MainPage";
+import VideoRoom from "./components/VideoRoom";
 
 //*** Global Store ***//
 
@@ -46,20 +47,23 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <BrowserRouter forceRefresh={true}>
+        <HashRouter forceRefresh={true}>
           <BaseLayout>
             <Switch>
-              <Route exact path="/" component={App}></Route>
-              <Route exact path="/login" component={Login}></Route>
+              <Route exact path="/" component={Login}></Route>
               <Route
                 exact
                 path="/chat/:roomName/:roomId"
                 component={requireAuth(ChatRoom)}
               ></Route>
               <Route path="/main" component={requireAuth(MainPage)}></Route>
+              <Route
+                path="/video/:roomId"
+                component={requireAuth(VideoRoom)}
+              ></Route>
             </Switch>
           </BaseLayout>
-        </BrowserRouter>
+        </HashRouter>
       </PersistGate>
     </Provider>
   </React.StrictMode>,
