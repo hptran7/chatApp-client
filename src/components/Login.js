@@ -20,12 +20,13 @@ function Login(props) {
   const handleOnLogin = async () => {
     axios.post(`${server}/user/login`, user).then(async (result) => {
       if (result.data.login) {
-        console.log(result.data.userAvatar);
         const token = result.data.token;
         localStorage.setItem("jsonwebtoken", token);
         setAuthenticationHeader(token);
         props.onLogin(result.data.userName, result.data.userAvatar);
         history.push("/main");
+      } else {
+        setMessage(result.data.message);
       }
     });
   };
@@ -54,6 +55,19 @@ function Login(props) {
     setShowRegister(!showRegister);
   };
 
+  const logInAsGuest = () => {
+    axios
+      .post(`${server}/user/login`, { userName: "guest", password: "password" })
+      .then(async (result) => {
+        if (result.data.login) {
+          const token = result.data.token;
+          localStorage.setItem("jsonwebtoken", token);
+          setAuthenticationHeader(token);
+          props.onLogin(result.data.userName, result.data.userAvatar);
+          history.push("/main");
+        }
+      });
+  };
   return (
     <div className="wrapper">
       {showRegister ? (
@@ -101,6 +115,7 @@ function Login(props) {
       ) : (
         <div className="form">
           <h1 className="title">Chat Application</h1>
+          <div className="result-message">{message}</div>
           <input
             placeholder="username"
             name="userName"
@@ -129,6 +144,9 @@ function Login(props) {
             <button className="button" onClick={handleOnSwitch}>
               <span>register</span>
             </button>
+          </div>
+          <div className="guest-login">
+            <p onClick={logInAsGuest}>Login as Guest</p>
           </div>
         </div>
       )}

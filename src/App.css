@@ -565,7 +565,18 @@
   display: flex;
   color: #efefef;
 }
+.guest-login {
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2em;
+}
 
+.guest-login:hover {
+  color: red;
+  cursor: pointer;
+}
 @media screen and (max-width: 750px) {
   .navbar {
     display: block;
