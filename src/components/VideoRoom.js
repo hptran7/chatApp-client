@@ -119,6 +119,7 @@ function VideoRoom() {
 
   return (
     <Container>
+      <h1>Hello</h1>
       <StyledVideo muted ref={userVideo} autoPlay playsInline />
       {peers.map((peer, index) => {
         return <Video key={index} peer={peer} />;
