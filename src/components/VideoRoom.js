@@ -6,15 +6,6 @@ import Peer from "simple-peer";
 import styled from "styled-components";
 import server from "../utils/serverLink";
 
-const Container = styled.div`
-  padding: 20px;
-  display: flex;
-  height: 100vh;
-  width: 90%;
-  margin: auto;
-  flex-wrap: wrap;
-`;
-
 const StyledVideo = styled.video`
   height: 40%;
   width: 50%;
@@ -118,12 +109,17 @@ function VideoRoom() {
   }
 
   return (
-    <Container>
-      <StyledVideo muted ref={userVideo} autoPlay playsInline />
-      {peers.map((peer, index) => {
-        return <Video key={index} peer={peer} />;
-      })}
-    </Container>
+    <div className="wrapper">
+      <div className="call-room-container">
+        <StyledVideo muted ref={userVideo} autoPlay playsInline />
+        {peers.map((peer, index) => {
+          return <Video key={index} peer={peer} />;
+        })}
+        {/* <div className="call-option">
+          <h1>Room Name</h1>
+        </div> */}
+      </div>
+    </div>
   );
 }
 
