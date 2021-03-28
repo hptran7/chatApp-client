@@ -9,6 +9,8 @@ import RoomMembers from "./RoomMembers";
 import { Icon } from "@iconify/react";
 import sendOutlined from "@iconify/icons-ant-design/send-outlined";
 import { Image } from "cloudinary-react";
+import * as AiIcons from "react-icons/ai";
+import * as FiIcons from "react-icons/fi";
 
 let socket;
 
@@ -19,8 +21,9 @@ function ChatRoom(props) {
   const [messages, setMessages] = useState([]);
   const [oldMessage, setOldMessage] = useState([]);
   const [showTypingMessage, setShowTypingMEssage] = useState("");
+  const [showVideoAlert, setShowVideoAlert] = useState(false);
+  const [videoCallRoomId, setVideoCallRoomId] = useState("");
   const history = useHistory();
-  // const [chatRoomMembers, setChatRoomMembers] = useState([]);
   const myRef = useRef(null);
   const handleOnChange = (e) => {
     e.preventDefault();
@@ -130,15 +133,37 @@ function ChatRoom(props) {
     socket.on("message", (message) => {
       setMessages((messages) => [...messages, message]);
       executeScroll();
-      console.log(message);
     });
   }, []);
   /** handle On new Member Log In **/
   useEffect(() => {
-    socket.on("announce", (message) => {
-      console.log("good");
+    socket.on("announce", (message) => {});
+  }, []);
+
+  /** handle On video call incoming **/
+  useEffect(() => {
+    socket.on("video invite", (roomId) => {
+      console.log(roomId);
+      setShowVideoAlert(true);
+      setVideoCallRoomId(roomId.roomId);
     });
   }, []);
+
+  /***  Functions Handle Call Options***/
+  const hanndleDeclineCall = () => {
+    setShowVideoAlert(false);
+  };
+
+  const handleOnAcceptCall = () => {
+    // history.push(`/video/#${videoCallRoomId}`);
+    const win = window.open(`#/video/${videoCallRoomId}`, "_blank");
+    win.focus();
+    setShowVideoAlert(false);
+  };
+
+  const handleOnVideoCall = () => {
+    socket.emit("call video", { roomId: roomId, userName: props.userName });
+  };
 
   const newMessagesLi = messages.map((message, index) => {
     const sender = props.roomMembers.filter((member) => {
@@ -181,6 +206,40 @@ function ChatRoom(props) {
 
   return (
     <div className="main-room">
+      {showVideoAlert ? (
+        <div className="modal">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h2>Incoming Call</h2>
+            </div>
+            <div className="modal-body">
+              <div className="calling-icon">
+                <FiIcons.FiPhoneCall size={30} />
+                <div className="calling-dots"></div>
+                <div className="calling-dots"></div>
+                <div className="calling-dots"></div>
+              </div>
+
+              <div>
+                <button
+                  className="call-btn"
+                  style={{ background: "green" }}
+                  onClick={handleOnAcceptCall}
+                >
+                  Answer
+                </button>
+                <button
+                  className="call-btn"
+                  style={{ background: "red" }}
+                  onClick={hanndleDeclineCall}
+                >
+                  Decline
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
       <RoomList />
       <div className="chat-message-wrapper">
         <div className="chat-feed">
@@ -208,6 +267,13 @@ function ChatRoom(props) {
                   className="send-button"
                 >
                   <Icon icon={sendOutlined} width="1.3em" />
+                </button>
+                <button
+                  type="submit"
+                  onClick={handleOnVideoCall}
+                  className="send-button"
+                >
+                  <AiIcons.AiFillPhone size={15} />
                 </button>
               </div>
             </div>
