@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import serverLink from "../utils/serverLink";
 import io from "socket.io-client";
 import Peer from "simple-peer";
@@ -7,6 +7,9 @@ import styled from "styled-components";
 import server from "../utils/serverLink";
 
 const StyledVideo = styled.video`
+  /* height: 600px;
+  width: 300px;
+  margin: 32px; */
   height: 40%;
   width: 50%;
 `;
@@ -16,7 +19,9 @@ const Video = (props) => {
 
   useEffect(() => {
     props.peer.on("stream", (stream) => {
-      ref.current.srcObject = stream;
+      if (stream.active) {
+        ref.current.srcObject = stream;
+      }
     });
   }, []);
 
@@ -50,10 +55,12 @@ function VideoRoom() {
               peerID: userID,
               peer,
             });
-            peers.push(peer);
+            peers.push({
+              peerID: userID,
+              peer,
+            });
           });
           setPeers(peers);
-          console.log(peers);
         });
 
         socketRef.current.on("user joined", (payload) => {
@@ -62,16 +69,38 @@ function VideoRoom() {
             peerID: payload.callerID,
             peer,
           });
+          const peerObj = {
+            peer,
+            peerID: payload.callerID,
+          };
 
-          setPeers((users) => [...users, peer]);
+          setPeers((users) => [...users, peerObj]);
         });
 
         socketRef.current.on("receiving returned signal", (payload) => {
           const item = peersRef.current.find((p) => p.peerID === payload.id);
           item.peer.signal(payload.signal);
         });
+
+        socketRef.current.on("user left", (payload) => {
+          if (payload.roomID === roomID) {
+            const peerObj = peersRef.current.find(
+              (p) => p.peerID === payload.socketId
+            );
+            if (peerObj) {
+              peerObj.peer.destroy();
+            }
+            const peers = peersRef.current.filter(
+              (p) => p.peerID !== payload.socketId
+            );
+            peersRef.current.peers;
+            setPeers(peers);
+          }
+        });
       });
-    return () => {};
+    return () => {
+      socketRef.current.disconnect();
+    };
   }, []);
 
   function createPeer(userToSignal, callerID, stream) {
@@ -109,15 +138,12 @@ function VideoRoom() {
   }
 
   return (
-    <div className="wrapper">
-      <div className="call-room-container">
+    <div className="video-wrapper">
+      <div className="webcam-section">
         <StyledVideo muted ref={userVideo} autoPlay playsInline />
-        {peers.map((peer, index) => {
-          return <Video key={index} peer={peer} />;
+        {peers.map((peer) => {
+          return <Video key={peer.peerID} peer={peer.peer} />;
         })}
-        {/* <div className="call-option">
-          <h1>Room Name</h1>
-        </div> */}
       </div>
     </div>
   );
