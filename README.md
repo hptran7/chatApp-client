@@ -15,13 +15,13 @@
 
 ## About the Project
 
-Gachasphere was built with the intention of being a central hub for all things mobile gaming. Due to the free-to-play nature of Gacha games, most players are actively playing multiple games at the same time. Unfortunately, the communities for each individual game remain isolated. Gachasphere hopes bridge the gap between existing communities and connect players from all over the world together.
+Chat-App is a simple video, text chat app that’s built with React, Redux for frontend and Node.js, express, sequelize and PostgresSQL for backend. Live-chat feature is built with Socket.io, live-video-conferencing is handled by WebRTC.
 
 ## Usage
 
-To start, visit [Gachasphere](http://gachasphere.surge.sh), register a new account, log into your existing account, or click the login as guest button.
+To start, visit [Chat-App](https://chat-dc.netlify.app/), register a new account, log into your existing account, or click the login as guest button.
 
-Once you're in, you will be able to see the global user rankings for all the top games. From there, you can create your own list of games that you have played. You can give each game a Gameplay rating and a Free-To-Play rating. Each game has its own dedicated page where you can see more details including popular Reddit threads and Twitter posts from the game's official account.
+Once you're in, you will be able to create private chatting room or to organize a video conference between members.
 
 ## Videos and Screenshots
 
@@ -31,7 +31,7 @@ Click below to see Boris demo Gachasphere:
 
 ## Getting Started
 
-To set up a local copy of the project follow the steps below. Be sure to follow the instructions in the [client-side repository](https://github.com/brodri4/Gachasphere-client) as well.
+To set up a local copy of the project follow the steps below. Be sure to follow the instructions in the [server-side repository](https://github.com/hptran7/chatApp-server.git) as well.
 
 # Prerequisites
 
@@ -46,7 +46,7 @@ npm init
 1. Clone to local machine
 
 ```sh
-git clone https://github.com/brodri4/Gachasphere-api.git
+git clone https://github.com/hptran7/chatApp-client.git
 ```
 
 2. Install NPM packages
