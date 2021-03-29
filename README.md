@@ -25,8 +25,7 @@ Once you're in, you will be able to create private chatting room or to organize 
 
 ## Videos and Screenshots
 
-Click below to see Boris demo Gachasphere:
-
+<img src="./images/chat-app.gif">
 <img src="./images/chat-App.png" width="375" alt="Gachasphere mobile walkthrough"/>
 <img src="./images/Screen Shot 2021-03-29 at 1.39.22 PM (3).png" width="375" alt="Gachasphere mobile walkthrough"/>
 
