@@ -60,7 +60,9 @@ function ChatRoom(props) {
 
   /** AutoScroll Function **/
   const executeScroll = () => {
-    myRef.current.scrollIntoView();
+    if (myRef.current) {
+      myRef.current.scrollIntoView();
+    }
   };
 
   /* establish socket connection when user enters room */
