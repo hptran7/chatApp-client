@@ -1,70 +1,98 @@
-# Getting Started with Create React App
+<h1> Gachasphere </h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<img src="./images/chat-App.png" width="300" alt="Gachasphere logo"/>
 
-## Available Scripts
+<h2>Summary </h2>
 
-In the project directory, you can run:
+- [About the Project](#about-the-project)
+- [Usage](#usage)
+- [Videos and Screenshots](#videos-and-screenshots)
+- [Getting Started](#getting-started)
+- [Built With](#built-with)
+- [Accessibility](#accessibility)
+- [Authors](#authors)
+- [Acknowledgements](#acknowledgements)
 
-### `npm start`
+## About the Project
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Gachasphere was built with the intention of being a central hub for all things mobile gaming. Due to the free-to-play nature of Gacha games, most players are actively playing multiple games at the same time. Unfortunately, the communities for each individual game remain isolated. Gachasphere hopes bridge the gap between existing communities and connect players from all over the world together.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Usage
 
-### `npm test`
+To start, visit [Gachasphere](http://gachasphere.surge.sh), register a new account, log into your existing account, or click the login as guest button.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Once you're in, you will be able to see the global user rankings for all the top games. From there, you can create your own list of games that you have played. You can give each game a Gameplay rating and a Free-To-Play rating. Each game has its own dedicated page where you can see more details including popular Reddit threads and Twitter posts from the game's official account.
 
-### `npm run build`
+## Videos and Screenshots
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Click below to see Boris demo Gachasphere:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<img src="./images/chat-App.png" width="375" alt="Gachasphere mobile walkthrough"/>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Getting Started
 
-### `npm run eject`
+To set up a local copy of the project follow the steps below. Be sure to follow the instructions in the [client-side repository](https://github.com/brodri4/Gachasphere-client) as well.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# Prerequisites
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- In an empty folder initialize a new Node.js project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```sh
+npm init
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+# Installation
 
-## Learn More
+1. Clone to local machine
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```sh
+git clone https://github.com/brodri4/Gachasphere-api.git
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+2. Install NPM packages
 
-### Code Splitting
+```sh
+npm install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+3. Start program
 
-### Analyzing the Bundle Size
+```sh
+node app.js
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Built With
 
-### Making a Progressive Web App
+- Javascript
+- CSS
+- [React](https://reactjs.org/)
+- [Redux](https://redux.js.org/)
+- [React Redux](https://react-redux.js.org/)
+- [Redux Persist](https://github.com/rt2zz/redux-persist)
+- [React Router DOM](https://reactrouter.com/web/guides/quick-start)
+- [Axios](https://github.com/axios/axios)
+- [History](https://www.npmjs.com/package/history)
+- [Node.js](https://nodejs.org/en/)
+- [Express](https://expressjs.com/)
+- [Sequelize](https://sequelize.org/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [JSON Web Token](https://www.npmjs.com/package/jsonwebtoken)
+- [nodemailer](https://nodemailer.com/about/)
+- [bcrypt](https://www.npmjs.com/package/bcrypt)
+- [Socket.Io](https://socket.io/)
+- [Peer-Simple](https://github.com/feross/simple-peer)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Accessibility
 
-### Advanced Configuration
+- All navigation and forms are tabbable.
+- Text alternatives for images.
+- Buttons and links have accessible names.
+- Appropriate title, label, and landmark elements, including descending order headings.
+- No elements or attributes that would limit use by keyboard or screenreader users.
+- Concerted effort to cut down on unnecessary divs, a React/SPA problem.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Authors
 
-### Deployment
+- **Hung Tran** - [hptran7](https://github.com/hptran7)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Acknowledgements
