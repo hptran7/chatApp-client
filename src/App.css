@@ -651,6 +651,64 @@
   animation-delay: 0.6s;
 }
 
+.myId {
+  margin-right: 5rem;
+  border-radius: 5px;
+  background: #c9d6ff; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #e2e2e2,
+    #c9d6ff
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #e2e2e2,
+    #c9d6ff
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  padding: 2rem;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+}
+.call-room-container {
+  padding: 20px;
+  display: flex;
+  height: 100vh;
+  width: 90%;
+  margin: auto;
+  flex-wrap: wrap;
+}
+.video-wrapper {
+  background: rgb(117, 84, 160);
+  background: linear-gradient(
+    90deg,
+    rgba(117, 84, 160, 1) 7%,
+    rgba(117, 84, 160, 1) 17%,
+    rgba(106, 95, 168, 1) 29%,
+    rgba(99, 103, 174, 1) 44%,
+    rgba(87, 116, 184, 1) 66%,
+    rgba(70, 135, 198, 1) 83%,
+    rgba(44, 163, 219, 1) 96%,
+    rgba(22, 188, 237, 1) 100%,
+    rgba(0, 212, 255, 1) 100%
+  );
+  padding: 20px;
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  margin: auto;
+  flex-wrap: wrap;
+}
+.webcam-section {
+  /* display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  align-content: center;
+  margin-top: 10rem;
+  margin-left: 10rem; */
+}
+
 @media screen and (max-width: 750px) {
   .navbar {
     display: block;
