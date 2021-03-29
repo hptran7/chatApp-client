@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useState } from "react";
 import serverLink from "../utils/serverLink";
+import { useHistory } from "react-router-dom";
 
 function UploadAvater() {
+  const history = useHistory();
   const [fileInputState, setFileInputState] = useState(false);
   const [previewSource, setPreviewSource] = useState(false);
   const handleFileInputChange = (e) => {
@@ -27,9 +29,15 @@ function UploadAvater() {
   const uploadImage = async (file) => {
     console.log(file);
     try {
-      axios.post(`${serverLink}/user/upload-avatar`, {
-        data: file,
-      });
+      axios
+        .post(`${serverLink}/user/upload-avatar`, {
+          data: file,
+        })
+        .then((result) => {
+          if (result.data.avatarUpdated) {
+            history.go(0);
+          }
+        });
     } catch (error) {
       console.log(error);
     }
