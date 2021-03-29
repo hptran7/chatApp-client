@@ -1,6 +1,6 @@
 <h1> Gachasphere </h1>
 
-<img src="./images/chat-App.png" width="300" alt="Gachasphere logo"/>
+<img src="./images/Screen Shot 2021-03-29 at 1.37.56 PM (3).png" width="300" alt="Gachasphere logo"/>
 
 <h2>Summary </h2>
 
@@ -28,6 +28,7 @@ Once you're in, you will be able to create private chatting room or to organize 
 Click below to see Boris demo Gachasphere:
 
 <img src="./images/chat-App.png" width="375" alt="Gachasphere mobile walkthrough"/>
+<img src="./images/Screen Shot 2021-03-29 at 1.39.22 PM (3).png" width="375" alt="Gachasphere mobile walkthrough"/>
 
 ## Getting Started
 
